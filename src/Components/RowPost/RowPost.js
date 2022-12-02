@@ -1,21 +1,26 @@
 import React from 'react'
 import './RowPost.css'
-function RowPost() {
+import { useEffect, useState } from 'react'
+import axios from '../../axios'
+import { imageUrl } from '../../Constants/constants'
+
+function RowPost(props) {
+  const [movies, setMovies] = useState([])
+  useEffect(() => {
+    axios.get(props.url).then(response => {
+      console.log(response.data)
+      setMovies(response.data.results)
+    })
+  }, [props.url])
   return (
     <div className='row'>
-      <h2>Shows</h2>
+      <h2>{props.title}</h2>
       <div className='posters'>
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
-        <img className='poster' src='https://sportshub.cbsistatic.com/i/2021/10/22/7dec4c7d-40b9-422c-9a9b-26b7829eb0a1/netflix-super-crooks.jpg' alt='poster' />
+        {movies.slice(0, 10).map((obj) =>
+          <img className={props.isSmall ? 'smallPoster' : 'poster'} src={`${imageUrl + obj.backdrop_path}`} alt='poster' />
+        )}
+
+
 
       </div>
     </div>

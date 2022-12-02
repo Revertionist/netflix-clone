@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { API_KEY, imageUrl } from '../../Constants/constants'
 import './Banner.css'
+import axios from '../../axios'
+import { useState } from 'react'
 function Banner() {
+    const [movie, setMovie] = useState()
+    useEffect(() => {
+        axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=en-US`).then((response) => {
+            console.log(response.data.results[0])
+            setMovie(response.data.results[0])
+        })
+    }, [])
     return (
-        <div className='banner'>
+        <div
+            style={{ backgroundImage: `url(${movie ? imageUrl + movie.backdrop_path : ""})` }}
+            className='banner'>
             <div className='content'>
-                <h1 className='title'>Beaky Plinders</h1>
+                <h1 className='title'>{movie ? movie.title : ""}</h1>
                 <div className='banner_buttons'>
                     <button className='button'>Play</button>
                     <button className='button'>My list</button>
 
                 </div>
-                <h1 className='description'>My name is Walter Hartwell White. I live at 308 Negra Arroyo Lane, Albuquerque, New Mexico, 87104. This is my confession.</h1>
+                <h1 className='description'>{movie ? movie.overview : ""}</h1>
             </div>
             <div className="fade_bottom"></div>
         </div>
