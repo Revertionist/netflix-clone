@@ -28,9 +28,11 @@
 }
 
 .poster:hover {
+    transition: transform 450ms ease-in-out;
     transform: scale(1.2);
 }
 
 .smallPoster:hover {
+    transition: transform 450ms ease-in-out;
     transform: scale(1.1);
 }
